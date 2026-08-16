@@ -107,13 +107,13 @@ function SwipeableMessageItem({
     <div {...handlers} className="relative touch-pan-y">
       {/* Visual Reply Cue Icon behind bubble */}
       <div
-        className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-[#128c7e]/20 dark:bg-[#25d366]/20 text-[#128c7e] dark:text-[#25d366] transition-opacity duration-150 pointer-events-none z-0"
+        className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-7 h-7 rounded-full bg-[#128c7e]/20 dark:bg-[#25d366]/20 text-[#128c7e] dark:text-[#25d366] transition-opacity duration-150 pointer-events-none z-0"
         style={{
           opacity: Math.min(offsetX / 40, 1),
           transform: `translateY(-50%) scale(${Math.min(offsetX / 40, 1)})`,
         }}
       >
-        <CornerDownRight className="w-4 h-4" />
+        <CornerDownRight className="w-3.5 h-3.5" />
       </div>
 
       {/* Swipable Message Content */}
@@ -431,7 +431,8 @@ export default function RoomPage({ params }: PageProps) {
   };
 
   const handleCopyLink = async () => {
-    const fullUrl = `http://localhost:3000/r/${code}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const fullUrl = `${origin}/r/${code}`;
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
@@ -528,7 +529,7 @@ export default function RoomPage({ params }: PageProps) {
   // 1. Loading State
   if (loading) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center p-6 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans">
+      <main className="min-h-[100dvh] flex flex-col items-center justify-center p-4 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans">
         <div className="flex flex-col items-center space-y-3 text-center">
           <div className="w-6 h-6 rounded-full border-2 border-[#128c7e] dark:border-[#25d366] border-t-transparent animate-spin" />
           <p className="text-xs font-mono dark:text-zinc-400 text-zinc-500">Validating room...</p>
@@ -540,11 +541,11 @@ export default function RoomPage({ params }: PageProps) {
   // 2. Invalid or Expired Room Error State
   if (!isValid) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between p-6 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans">
+      <main className="min-h-[100dvh] flex flex-col items-center justify-between p-4 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans overflow-x-hidden">
         <div className="w-full max-w-sm flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium"
+            className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium py-1"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -552,10 +553,10 @@ export default function RoomPage({ params }: PageProps) {
           <ThemeToggle />
         </div>
 
-        <div className="w-full max-w-sm my-auto">
-          <div className="p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 text-center space-y-5">
+        <div className="w-full max-w-sm my-auto py-4">
+          <div className="p-6 sm:p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 text-center space-y-5">
             <div className="space-y-2">
-              <h1 className="text-xl font-bold tracking-tight dark:text-white text-zinc-950">
+              <h1 className="text-lg sm:text-xl font-bold tracking-tight dark:text-white text-zinc-950">
                 Room expired or invalid
               </h1>
               <p className="text-xs dark:text-zinc-400 text-zinc-600">
@@ -573,7 +574,7 @@ export default function RoomPage({ params }: PageProps) {
           </div>
         </div>
 
-        <footer className="py-6 text-center text-xs dark:text-zinc-600 text-zinc-400 font-mono">
+        <footer className="py-4 text-center text-[11px] sm:text-xs dark:text-zinc-600 text-zinc-400 font-mono">
           Auto-expires in 60 minutes
         </footer>
       </main>
@@ -583,11 +584,11 @@ export default function RoomPage({ params }: PageProps) {
   // 3. Pre-Chat Nickname Confirmation View
   if (!hasJoined) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between p-6 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans">
+      <main className="min-h-[100dvh] flex flex-col items-center justify-between p-4 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans overflow-x-hidden">
         <div className="w-full max-w-sm flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium"
+            className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium py-1"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -596,14 +597,14 @@ export default function RoomPage({ params }: PageProps) {
         </div>
 
         <div className="w-full max-w-sm my-auto py-4">
-          <div className="p-6 sm:p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-5">
+          <div className="p-5 sm:p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-5">
             <div className="space-y-1">
-              <h1 className="text-lg font-bold tracking-tight dark:text-white text-zinc-950 leading-snug">
+              <h1 className="text-base sm:text-lg font-bold tracking-tight dark:text-white text-zinc-950 leading-snug">
                 {roomName ? (
                   <>
                     You&apos;ve been invited to chat in{" "}
                     <span className="text-zinc-900 dark:text-white font-bold">{roomName}</span>{" "}
-                    <span className="text-[#128c7e] dark:text-[#25d366] font-mono text-sm font-normal">({code})</span>
+                    <span className="text-[#128c7e] dark:text-[#25d366] font-mono text-xs sm:text-sm font-normal">({code})</span>
                   </>
                 ) : (
                   <>
@@ -660,14 +661,14 @@ export default function RoomPage({ params }: PageProps) {
           </div>
         </div>
 
-        <footer className="py-6 text-center text-xs dark:text-zinc-600 text-zinc-400 font-mono">
+        <footer className="py-4 text-center text-[11px] sm:text-xs dark:text-zinc-600 text-zinc-400 font-mono">
           Auto-expires in 60 minutes
         </footer>
       </main>
     );
   }
 
-  // 4. Live Real-Time Chat Room View
+  // 4. Live Real-Time Chat Room View - Scaled for Small Mobile Phones (iPhone 12 / SE)
   const currentUserNickname = name.trim() || "Anonymous";
   const isMessageTooLong = inputMessage.length > 1000;
 
@@ -779,28 +780,28 @@ export default function RoomPage({ params }: PageProps) {
 
   return (
     <main
-      className="min-h-screen max-h-[100dvh] h-[100dvh] flex flex-col dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 overflow-hidden font-sans transition-colors duration-150"
+      className="min-h-[100dvh] max-h-[100dvh] h-[100dvh] flex flex-col dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 overflow-hidden font-sans transition-colors duration-150"
       onClick={() => {
         setActiveMenuMessageId(null);
       }}
     >
-      {/* Top Header */}
-      <header className="z-10 dark:border-zinc-800 border-zinc-200 dark:bg-[#18181b] bg-white px-4 sm:px-8 py-3 flex items-center justify-between shrink-0 border-b">
-        <div className="flex items-center gap-2.5 min-w-0">
+      {/* Top Header - Optimized for Small Phone Viewports */}
+      <header className="z-10 dark:border-zinc-800 border-zinc-200 dark:bg-[#18181b] bg-white px-3 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between shrink-0 border-b">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           <button
             type="button"
             onClick={handleLeaveRoom}
-            className="p-1.5 rounded-xl dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 hover:text-zinc-900 transition-colors cursor-pointer shrink-0"
+            className="p-1 rounded-xl dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 hover:text-zinc-900 transition-colors cursor-pointer shrink-0"
             title="Leave Chat"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-1.5 min-w-0 overflow-hidden">
             <span className="w-2 h-2 rounded-full bg-[#128c7e] dark:bg-[#25d366] shrink-0" />
             {roomName ? (
-              <h1 className="text-xs sm:text-sm font-bold dark:text-white text-zinc-900 truncate">
+              <h1 className="text-xs sm:text-sm font-bold dark:text-white text-zinc-900 truncate max-w-[140px] xs:max-w-[200px] sm:max-w-none">
                 {roomName}{" "}
-                <span className="font-mono text-zinc-400 font-normal text-xs ml-1">
+                <span className="font-mono text-zinc-400 font-normal text-xs ml-0.5">
                   ({code})
                 </span>
               </h1>
@@ -859,7 +860,7 @@ export default function RoomPage({ params }: PageProps) {
         </div>
 
         {/* Right Side MOBILE VIEW */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center shrink-0 ml-2">
           <button
             type="button"
             onClick={() => setShowMobileDrawer((prev) => !prev)}
@@ -873,15 +874,15 @@ export default function RoomPage({ params }: PageProps) {
 
       {/* Notifications / Toast Banners */}
       {rateLimitError && (
-        <div className="z-20 bg-red-500/10 border-b border-red-500/20 py-2 px-4 text-center text-xs font-medium text-red-500 flex items-center justify-center gap-2">
-          <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
+        <div className="z-20 bg-red-500/10 border-b border-red-500/20 py-2 px-3 text-center text-[11px] sm:text-xs font-medium text-red-500 flex items-center justify-center gap-1.5">
+          <AlertTriangle className="w-3.5 h-3.5 text-red-500 shrink-0" />
           <span>{rateLimitError}</span>
         </div>
       )}
 
       {reportToast && (
-        <div className="z-20 bg-emerald-500/10 border-b border-emerald-500/20 py-2 px-4 text-center text-xs font-medium text-emerald-600 flex items-center justify-center gap-2">
-          <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="z-20 bg-emerald-500/10 border-b border-emerald-500/20 py-2 px-3 text-center text-[11px] sm:text-xs font-medium text-emerald-600 flex items-center justify-center gap-1.5">
+          <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
           <span>{reportToast}</span>
         </div>
       )}
@@ -894,11 +895,11 @@ export default function RoomPage({ params }: PageProps) {
           
           {/* Active Filter Bar */}
           {(blockedUsers.length > 0 || filterNickname || localClearedMyMessages) && (
-            <div className="z-10 dark:bg-[#18181b] bg-white border-b dark:border-zinc-800 border-zinc-200 px-4 py-2 flex items-center justify-between text-xs gap-3 font-sans">
-              <div className="flex items-center gap-2 overflow-x-auto">
+            <div className="z-10 dark:bg-[#18181b] bg-white border-b dark:border-zinc-800 border-zinc-200 px-3 sm:px-4 py-1.5 sm:py-2 flex items-center justify-between text-xs gap-2 font-sans">
+              <div className="flex items-center gap-1.5 overflow-x-auto">
                 {filterNickname && (
-                  <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-[#128c7e]/10 dark:bg-[#25d366]/10 border border-[#128c7e]/30 dark:border-[#25d366]/30 text-[#128c7e] dark:text-[#25d366] font-medium">
-                    <span>Viewing only: <strong className="font-mono">{filterNickname}</strong></span>
+                  <span className="inline-flex items-center gap-1 py-0.5 px-2.5 rounded-full bg-[#128c7e]/10 dark:bg-[#25d366]/10 border border-[#128c7e]/30 dark:border-[#25d366]/30 text-[#128c7e] dark:text-[#25d366] font-medium text-[11px]">
+                    <span>Viewing: <strong className="font-mono">{filterNickname}</strong></span>
                     <button
                       type="button"
                       onClick={() => setFilterNickname(null)}
@@ -910,8 +911,8 @@ export default function RoomPage({ params }: PageProps) {
                 )}
 
                 {localClearedMyMessages && (
-                  <span className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-[#128c7e]/10 dark:bg-[#25d366]/10 border border-[#128c7e]/20 dark:border-[#25d366]/20 text-[#128c7e] dark:text-[#25d366] font-medium text-[11px]">
-                    <span>Your sent messages are hidden locally</span>
+                  <span className="inline-flex items-center gap-1 py-0.5 px-2 rounded-full bg-[#128c7e]/10 dark:bg-[#25d366]/10 border border-[#128c7e]/20 dark:border-[#25d366]/20 text-[#128c7e] dark:text-[#25d366] font-medium text-[10px]">
+                    <span>Sent messages hidden locally</span>
                     <button
                       type="button"
                       onClick={() => setLocalClearedMyMessages(false)}
@@ -923,12 +924,12 @@ export default function RoomPage({ params }: PageProps) {
                 )}
 
                 {blockedUsers.length > 0 && (
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <span className="dark:text-zinc-500 text-zinc-400 font-medium">Blocked:</span>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <span className="dark:text-zinc-500 text-zinc-400 font-medium text-[10px]">Blocked:</span>
                     {blockedUsers.map((blockedName) => (
                       <span
                         key={blockedName}
-                        className="inline-flex items-center gap-1 py-0.5 px-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 font-mono text-[11px]"
+                        className="inline-flex items-center gap-1 py-0.5 px-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 font-mono text-[10px]"
                       >
                         <span>{blockedName}</span>
                         <button
@@ -948,7 +949,7 @@ export default function RoomPage({ params }: PageProps) {
                 <button
                   type="button"
                   onClick={() => setFilterNickname(null)}
-                  className="text-xs text-zinc-400 hover:text-zinc-200 underline font-medium cursor-pointer shrink-0"
+                  className="text-[11px] text-zinc-400 hover:text-zinc-200 underline font-medium cursor-pointer shrink-0"
                 >
                   Show All
                 </button>
@@ -957,9 +958,9 @@ export default function RoomPage({ params }: PageProps) {
           )}
 
           {/* Messages Stream Container */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3.5 sm:space-y-4">
             {visibleMessages.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center p-6 dark:text-zinc-500 text-zinc-400 space-y-2">
+              <div className="h-full flex flex-col items-center justify-center text-center p-4 dark:text-zinc-500 text-zinc-400 space-y-2">
                 <MessageSquareDashed className="w-8 h-8 opacity-40" />
                 <p className="text-xs font-mono">
                   {filterNickname ? `No messages from ${filterNickname}` : "No messages in room yet"}
@@ -969,8 +970,8 @@ export default function RoomPage({ params }: PageProps) {
               visibleMessages.map((msg) => {
                 if (msg.type === "system") {
                   return (
-                    <div key={msg.id} className="flex justify-center my-3">
-                      <span className="text-xs dark:text-zinc-400 text-zinc-600 dark:bg-[#18181b] bg-white dark:border-zinc-800 border-zinc-200 border py-1 px-3 rounded-full font-medium">
+                    <div key={msg.id} className="flex justify-center my-2 sm:my-3">
+                      <span className="text-[11px] sm:text-xs dark:text-zinc-400 text-zinc-600 dark:bg-[#18181b] bg-white dark:border-zinc-800 border-zinc-200 border py-0.5 px-2.5 sm:py-1 sm:px-3 rounded-full font-medium">
                         {msg.message}
                       </span>
                     </div>
@@ -1006,7 +1007,7 @@ export default function RoomPage({ params }: PageProps) {
 
                       {/* Message Bubble + Action Buttons */}
                       <div
-                        className={`relative flex items-center gap-2 max-w-[88%] sm:max-w-[75%] ${
+                        className={`relative flex items-center gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[75%] ${
                           isMe ? "flex-row-reverse" : "flex-row"
                         }`}
                       >
@@ -1019,7 +1020,7 @@ export default function RoomPage({ params }: PageProps) {
                                 e.stopPropagation();
                                 setActiveMenuMessageId(isMenuOpen ? null : msg.id);
                               }}
-                              className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-1 rounded-lg dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 transition-all cursor-pointer"
+                              className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-1 rounded-lg dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 transition-all cursor-pointer shrink-0"
                               title="Options"
                             >
                               <MoreVertical className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
@@ -1089,7 +1090,7 @@ export default function RoomPage({ params }: PageProps) {
 
                         {/* Message Bubble Content */}
                         <div
-                          className={`py-2 px-3.5 rounded-xl text-sm break-words transition-all ${
+                          className={`py-2 px-3 sm:px-3.5 rounded-xl text-xs sm:text-sm break-words transition-all ${
                             isHighlighted ? "ring-2 ring-[#128c7e] dark:ring-[#25d366]" : ""
                           } ${
                             msg.isDeleted
@@ -1103,7 +1104,7 @@ export default function RoomPage({ params }: PageProps) {
                           {!msg.isDeleted && msg.replyTo && (
                             <div
                               onClick={() => handleScrollToOriginalMessage(msg.replyTo!.id)}
-                              className={`mb-1.5 p-1.5 rounded-md border-l-2 text-xs cursor-pointer transition-colors ${
+                              className={`mb-1.5 p-1.5 rounded-md border-l-2 text-[11px] sm:text-xs cursor-pointer transition-colors ${
                                 isMe
                                   ? "bg-black/20 border-white/40 text-white/90"
                                   : "dark:bg-[#0f0f11] bg-zinc-100 border-[#128c7e] dark:border-[#25d366] dark:text-zinc-300 text-zinc-700"
@@ -1112,7 +1113,7 @@ export default function RoomPage({ params }: PageProps) {
                               <span className="block font-semibold font-mono text-[10px] opacity-90">
                                 {msg.replyTo.nickname}
                               </span>
-                              <p className="truncate opacity-80 font-normal text-xs">
+                              <p className="truncate opacity-80 font-normal text-[11px] sm:text-xs">
                                 {msg.replyTo.messageSnippet}
                               </p>
                             </div>
@@ -1120,7 +1121,7 @@ export default function RoomPage({ params }: PageProps) {
 
                           <p className="leading-relaxed whitespace-pre-wrap">{msg.message}</p>
                           <span
-                            className={`block text-[10px] font-mono text-right mt-1 ${
+                            className={`block text-[9px] sm:text-[10px] font-mono text-right mt-1 ${
                               msg.isDeleted
                                 ? "dark:text-zinc-600 text-zinc-400"
                                 : isMe
@@ -1140,26 +1141,26 @@ export default function RoomPage({ params }: PageProps) {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Message Input Footer */}
-          <footer className="z-10 p-3 sm:p-4 border-t dark:border-zinc-800 border-zinc-200 dark:bg-[#18181b] bg-white shrink-0 relative font-sans">
+          {/* Message Input Footer - Optimized for Small Phone Viewports */}
+          <footer className="z-10 p-2.5 sm:p-4 border-t dark:border-zinc-800 border-zinc-200 dark:bg-[#18181b] bg-white shrink-0 relative font-sans">
             {showEmojiPicker && (
-              <div className="absolute bottom-20 right-2 sm:right-4 z-40 border dark:border-zinc-800 border-zinc-200 rounded-2xl overflow-hidden animate-fadeIn">
+              <div className="absolute bottom-16 sm:bottom-20 right-2 sm:right-4 z-40 border dark:border-zinc-800 border-zinc-200 rounded-2xl overflow-hidden animate-fadeIn max-w-[290px] sm:max-w-none">
                 <EmojiPicker
                   onEmojiClick={handleEmojiClick}
                   theme={theme === "dark" ? Theme.DARK : Theme.LIGHT}
-                  width={300}
-                  height={360}
+                  width={280}
+                  height={320}
                 />
               </div>
             )}
 
             <form
               onSubmit={handleSendMessage}
-              className="w-full flex flex-col gap-2"
+              className="w-full flex flex-col gap-1.5 sm:gap-2"
             >
               {replyingTo && (
-                <div className="flex items-center justify-between p-2 px-3 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border border-[#128c7e]/30 dark:border-[#25d366]/30 text-xs">
-                  <div className="flex items-center gap-2 overflow-hidden">
+                <div className="flex items-center justify-between p-1.5 px-2.5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border border-[#128c7e]/30 dark:border-[#25d366]/30 text-[11px] sm:text-xs">
+                  <div className="flex items-center gap-1.5 overflow-hidden">
                     <CornerDownRight className="w-3.5 h-3.5 text-[#128c7e] dark:text-[#25d366] shrink-0" />
                     <span className="dark:text-zinc-400 text-zinc-600 font-medium shrink-0">
                       Replying to <span className="text-[#128c7e] dark:text-[#25d366] font-mono font-semibold">{replyingTo.nickname}</span>:
@@ -1171,7 +1172,7 @@ export default function RoomPage({ params }: PageProps) {
                   <button
                     type="button"
                     onClick={() => setReplyingTo(null)}
-                    className="dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 font-bold p-1 cursor-pointer shrink-0 ml-2"
+                    className="dark:text-zinc-400 text-zinc-500 hover:dark:text-zinc-200 font-bold p-1 cursor-pointer shrink-0 ml-1"
                     title="Cancel reply"
                   >
                     ✕
@@ -1179,7 +1180,7 @@ export default function RoomPage({ params }: PageProps) {
                 </div>
               )}
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <input
                   ref={inputRef}
                   type="text"
@@ -1187,26 +1188,26 @@ export default function RoomPage({ params }: PageProps) {
                   onChange={(e) => setInputMessage(e.target.value)}
                   placeholder={replyingTo ? `Replying to ${replyingTo.nickname}...` : "Type a message..."}
                   maxLength={1000}
-                  className="flex-1 py-2.5 px-3.5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 dark:border-zinc-800 border-zinc-300 dark:text-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#128c7e]/50 dark:focus:ring-[#25d366]/50 focus:border-[#128c7e] dark:focus:border-[#25d366] transition-all text-sm font-sans"
+                  className="flex-1 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 dark:border-zinc-800 border-zinc-300 dark:text-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#128c7e]/50 dark:focus:ring-[#25d366]/50 focus:border-[#128c7e] dark:focus:border-[#25d366] transition-all text-xs sm:text-sm font-sans"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker((prev) => !prev)}
-                  className={`p-2.5 rounded-xl transition-colors cursor-pointer text-base ${
+                  className={`p-2 sm:p-2.5 rounded-xl transition-colors cursor-pointer text-base shrink-0 ${
                     showEmojiPicker
                       ? "bg-[#128c7e]/20 dark:bg-[#25d366]/20 text-[#128c7e] dark:text-[#25d366]"
                       : "dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-400 text-zinc-600 hover:dark:bg-zinc-800"
                   }`}
                   title="Add Emoji"
                 >
-                  <Smile className="w-5 h-5" />
+                  <Smile className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
 
                 <button
                   type="submit"
                   disabled={!inputMessage.trim() || isMessageTooLong}
-                  className={`py-2.5 px-4 rounded-xl font-medium text-white ${getColorById(colorId).bgClass} hover:opacity-90 active:opacity-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-2 text-sm shrink-0`}
+                  className={`py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl font-medium text-white ${getColorById(colorId).bgClass} hover:opacity-90 active:opacity-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center justify-center gap-1.5 text-xs sm:text-sm shrink-0`}
                 >
                   <span className="hidden sm:inline">Send</span>
                   <Send className="w-4 h-4" />
@@ -1216,7 +1217,7 @@ export default function RoomPage({ params }: PageProps) {
               {inputMessage.length > 700 && (
                 <div className="flex justify-end px-1">
                   <span
-                    className={`text-[11px] font-mono font-medium ${
+                    className={`text-[10px] sm:text-[11px] font-mono font-medium ${
                       inputMessage.length >= 1000 ? "text-red-500" : "dark:text-zinc-500 text-zinc-400"
                     }`}
                   >
@@ -1234,14 +1235,14 @@ export default function RoomPage({ params }: PageProps) {
         </aside>
       </div>
 
-      {/* Mobile Menu Panel (< md) */}
+      {/* Mobile Menu Panel (< md) - Scaled for Small Phones (iPhone 12 / SE) */}
       {showMobileDrawer && (
         <div
           className="fixed inset-0 z-50 flex justify-end md:hidden bg-black/60 backdrop-blur-sm animate-fadeIn"
           onClick={() => setShowMobileDrawer(false)}
         >
           <div
-            className="w-72 sm:w-80 w-[80vw] h-full p-4 dark:bg-[#18181b] bg-white border-l dark:border-zinc-800 border-zinc-200 flex flex-col text-left space-y-4 overflow-y-auto font-sans"
+            className="w-[82vw] max-w-[300px] h-full p-4 dark:bg-[#18181b] bg-white border-l dark:border-zinc-800 border-zinc-200 flex flex-col text-left space-y-4 overflow-y-auto font-sans"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-3 border-b dark:border-zinc-800 border-zinc-200">
@@ -1312,11 +1313,11 @@ export default function RoomPage({ params }: PageProps) {
           onClick={() => setDeleteConfirmMessageId(null)}
         >
           <div
-            className="w-full max-w-sm p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
+            className="w-full max-w-xs sm:max-w-sm p-5 sm:p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="space-y-1">
-              <h3 className="text-base font-bold dark:text-white text-zinc-900">Delete Message?</h3>
+              <h3 className="text-sm sm:text-base font-bold dark:text-white text-zinc-900">Delete Message?</h3>
               <p className="text-xs dark:text-zinc-400 text-zinc-600">
                 This will delete your message for everyone in the room.
               </p>
@@ -1325,14 +1326,14 @@ export default function RoomPage({ params }: PageProps) {
               <button
                 type="button"
                 onClick={() => setDeleteConfirmMessageId(null)}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDeleteMessage}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium text-white bg-red-600 hover:bg-red-500 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium text-white bg-red-600 hover:bg-red-500 transition-colors cursor-pointer"
               >
                 Delete
               </button>
@@ -1348,11 +1349,11 @@ export default function RoomPage({ params }: PageProps) {
           onClick={() => setShowDeleteAllModal(false)}
         >
           <div
-            className="w-full max-w-sm p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
+            className="w-full max-w-xs sm:max-w-sm p-5 sm:p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="space-y-1">
-              <h3 className="text-base font-bold dark:text-white text-zinc-900">Delete ALL your messages?</h3>
+              <h3 className="text-sm sm:text-base font-bold dark:text-white text-zinc-900">Delete ALL your messages?</h3>
               <p className="text-xs dark:text-zinc-400 text-zinc-600">
                 This will permanently delete <strong>ALL your messages for EVERYONE</strong> in this room.
               </p>
@@ -1361,14 +1362,14 @@ export default function RoomPage({ params }: PageProps) {
               <button
                 type="button"
                 onClick={() => setShowDeleteAllModal(false)}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDeleteAllMessages}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium text-white bg-red-600 hover:bg-red-500 transition-colors cursor-pointer font-bold"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium text-white bg-red-600 hover:bg-red-500 transition-colors cursor-pointer font-bold"
               >
                 Delete All
               </button>
@@ -1384,11 +1385,11 @@ export default function RoomPage({ params }: PageProps) {
           onClick={() => setShowClearMyMessagesModal(false)}
         >
           <div
-            className="w-full max-w-sm p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
+            className="w-full max-w-xs sm:max-w-sm p-5 sm:p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 text-center font-sans"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="space-y-1">
-              <h3 className="text-base font-bold dark:text-white text-zinc-900">Clear My Messages?</h3>
+              <h3 className="text-sm sm:text-base font-bold dark:text-white text-zinc-900">Clear My Messages?</h3>
               <p className="text-xs dark:text-zinc-400 text-zinc-600">
                 This will remove your sent messages from <strong>YOUR view only</strong>.
               </p>
@@ -1397,14 +1398,14 @@ export default function RoomPage({ params }: PageProps) {
               <button
                 type="button"
                 onClick={() => setShowClearMyMessagesModal(false)}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium dark:bg-[#0f0f11] bg-zinc-100 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-200 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmClearMyMessages}
-                className="w-full py-2 px-4 rounded-xl text-xs font-medium text-white dark:text-[#0b1210] dark:font-bold bg-[#128c7e] hover:bg-[#0f766a] dark:bg-[#25d366] hover:dark:bg-[#20bd5a] transition-colors duration-150 cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl text-xs font-medium text-white dark:text-[#0b1210] dark:font-bold bg-[#128c7e] hover:bg-[#0f766a] dark:bg-[#25d366] hover:dark:bg-[#20bd5a] transition-colors duration-150 cursor-pointer"
               >
                 Clear My View
               </button>
@@ -1420,12 +1421,12 @@ export default function RoomPage({ params }: PageProps) {
           onClick={() => setReportTarget(null)}
         >
           <div
-            className="w-full max-w-md p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-5 text-left"
+            className="w-full max-w-xs sm:max-w-md p-5 sm:p-6 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-4 sm:space-y-5 text-left"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b dark:border-zinc-800 border-zinc-200 pb-3">
               <div>
-                <h3 className="text-base font-bold dark:text-white text-zinc-900">Report User</h3>
+                <h3 className="text-sm sm:text-base font-bold dark:text-white text-zinc-900">Report User</h3>
                 <p className="text-xs dark:text-zinc-400 text-zinc-500">
                   Reporting <span className="text-[#128c7e] dark:text-[#25d366] font-mono">{reportTarget.nickname}</span>
                 </p>
@@ -1440,7 +1441,7 @@ export default function RoomPage({ params }: PageProps) {
             </div>
 
             {reportTarget.messageText && (
-              <div className="p-3 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border dark:border-zinc-800 border-zinc-200 text-xs dark:text-zinc-400 text-zinc-600 italic">
+              <div className="p-2.5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border dark:border-zinc-800 border-zinc-200 text-xs dark:text-zinc-400 text-zinc-600 italic">
                 &quot;{reportTarget.messageText}&quot;
               </div>
             )}
@@ -1454,7 +1455,7 @@ export default function RoomPage({ params }: PageProps) {
                   {REPORT_REASONS.map((reason) => (
                     <label
                       key={reason}
-                      className={`flex items-center gap-3 p-2.5 rounded-xl border text-xs cursor-pointer transition-all ${
+                      className={`flex items-center gap-3 p-2 rounded-xl border text-xs cursor-pointer transition-all ${
                         selectedReason === reason
                           ? "bg-[#128c7e]/10 dark:bg-[#25d366]/20 border-[#128c7e]/50 dark:border-[#25d366]/50 dark:text-white text-zinc-900 font-medium"
                           : "dark:bg-[#0f0f11] bg-zinc-50 dark:border-zinc-800 border-zinc-200 dark:text-zinc-300 text-zinc-700 hover:bg-zinc-100"
@@ -1478,14 +1479,14 @@ export default function RoomPage({ params }: PageProps) {
                 <button
                   type="button"
                   onClick={() => setReportTarget(null)}
-                  className="py-2 px-4 rounded-xl text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors cursor-pointer"
+                  className="py-2 px-3 rounded-xl text-xs font-medium dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submittingReport}
-                  className="py-2 px-5 rounded-xl text-xs font-medium text-white dark:text-[#0b1210] dark:font-bold bg-[#128c7e] hover:bg-[#0f766a] dark:bg-[#25d366] hover:dark:bg-[#20bd5a] transition-colors duration-150 cursor-pointer"
+                  className="py-2 px-4 rounded-xl text-xs font-medium text-white dark:text-[#0b1210] dark:font-bold bg-[#128c7e] hover:bg-[#0f766a] dark:bg-[#25d366] hover:dark:bg-[#20bd5a] transition-colors duration-150 cursor-pointer"
                 >
                   {submittingReport ? "Submitting..." : "Submit Report"}
                 </button>

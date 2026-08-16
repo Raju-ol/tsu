@@ -42,15 +42,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col justify-between p-6 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans transition-colors duration-150">
+    <main className="min-h-[100dvh] flex flex-col justify-between p-4 sm:p-8 md:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans transition-colors duration-150 overflow-x-hidden">
       {/* Top Header */}
       <header className="w-full max-w-4xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.png"
             alt="Tsu Logo"
-            className="w-7 h-7 rounded-full object-cover ring-1 ring-[#128c7e]/30 dark:ring-[#25d366]/30"
+            className="w-7 h-7 rounded-full object-cover ring-1 ring-[#128c7e]/30 dark:ring-[#25d366]/30 shrink-0"
           />
           <span className="font-mono text-sm font-bold tracking-wider uppercase dark:text-zinc-300 text-zinc-800">
             TSU
@@ -59,19 +59,19 @@ export default function Home() {
         <ThemeToggle />
       </header>
 
-      {/* Simplified Minimal Hero Section */}
-      <section className="w-full max-w-xl mx-auto my-auto py-16 space-y-8 text-center sm:text-left">
+      {/* Simplified Minimal Hero Section - Scaled for Small Phones (iPhone 12 / SE) */}
+      <section className="w-full max-w-xl mx-auto my-auto py-8 sm:py-16 space-y-6 sm:space-y-8 text-center sm:text-left">
         <div className="space-y-3">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight dark:text-white text-zinc-950 leading-[1.15]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight dark:text-white text-zinc-950 leading-[1.2] sm:leading-[1.15]">
             Ephemeral, private chat for{" "}
-            <span className="font-mono text-[#128c7e] dark:text-[#25d366] whitespace-nowrap">
+            <span className="font-mono text-[#128c7e] dark:text-[#25d366] inline-block sm:whitespace-nowrap">
               {displayedText}
               <span className="animate-pulse inline-block font-mono text-[#128c7e] dark:text-[#25d366] font-normal ml-0.5">
                 |
               </span>
             </span>
           </h1>
-          <p className="text-sm sm:text-base dark:text-zinc-400 text-zinc-600 leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base dark:text-zinc-400 text-zinc-600 leading-relaxed">
             Disposable chat rooms for instant communication. No accounts, no phone numbers, auto-expires in 60 minutes.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function Home() {
       </section>
 
       {/* Minimal Footer */}
-      <footer className="w-full max-w-4xl mx-auto text-xs dark:text-zinc-600 text-zinc-400 font-mono text-center sm:text-left">
+      <footer className="w-full max-w-4xl mx-auto text-[11px] sm:text-xs dark:text-zinc-600 text-zinc-400 font-mono text-center sm:text-left py-2">
         Auto-expires in 60 minutes • In-memory only
       </footer>
     </main>

@@ -54,7 +54,8 @@ export default function CreateRoomPage() {
 
   const handleCopyLink = async () => {
     if (!createdRoomCode) return;
-    const fullUrl = `http://localhost:3000/r/${createdRoomCode}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const fullUrl = `${origin}/r/${createdRoomCode}`;
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
@@ -76,12 +77,12 @@ export default function CreateRoomPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-between p-6 sm:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans transition-colors duration-150">
+    <main className="min-h-[100dvh] flex flex-col items-center justify-between p-4 sm:p-8 md:p-12 dark:bg-[#0f0f11] bg-[#fafafa] dark:text-zinc-100 text-zinc-900 font-sans transition-colors duration-150 overflow-x-hidden">
       {/* Top Header */}
       <div className="w-full max-w-sm flex items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium"
+          className="inline-flex items-center gap-2 text-xs dark:text-zinc-400 text-zinc-600 hover:dark:text-zinc-200 transition-colors font-medium py-1"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
@@ -90,8 +91,8 @@ export default function CreateRoomPage() {
       </div>
 
       {/* Main Form Container */}
-      <div className="w-full max-w-sm my-auto py-6">
-        <div className="p-6 sm:p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-6">
+      <div className="w-full max-w-sm my-auto py-4 sm:py-6">
+        <div className="p-5 sm:p-8 rounded-2xl dark:bg-[#18181b] bg-white border dark:border-zinc-800 border-zinc-200 space-y-5 sm:space-y-6">
           <h1 className="text-xl font-bold tracking-tight dark:text-white text-zinc-950">
             Create a Room
           </h1>
@@ -153,16 +154,16 @@ export default function CreateRoomPage() {
           ) : (
             /* Created Room Success State */
             <div className="space-y-4 text-center animate-fadeIn">
-              <div className="p-5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border dark:border-zinc-800 border-zinc-200 space-y-1">
+              <div className="p-4 sm:p-5 rounded-xl dark:bg-[#0f0f11] bg-zinc-100 border dark:border-zinc-800 border-zinc-200 space-y-1">
                 {createdRoomName && (
                   <span className="text-sm font-bold text-zinc-900 dark:text-white block truncate">
                     {createdRoomName}
                   </span>
                 )}
-                <span className="text-xs uppercase tracking-wider dark:text-zinc-400 text-zinc-600 font-medium block">
+                <span className="text-[11px] uppercase tracking-wider dark:text-zinc-400 text-zinc-600 font-medium block">
                   Room Code
                 </span>
-                <span className="text-3xl font-mono font-bold tracking-widest text-[#128c7e] dark:text-[#25d366] block">
+                <span className="text-2xl sm:text-3xl font-mono font-bold tracking-widest text-[#128c7e] dark:text-[#25d366] block">
                   {createdRoomCode}
                 </span>
               </div>
@@ -200,7 +201,7 @@ export default function CreateRoomPage() {
         </div>
       </div>
 
-      <footer className="py-6 text-center text-xs dark:text-zinc-600 text-zinc-400 font-mono">
+      <footer className="py-4 text-center text-[11px] sm:text-xs dark:text-zinc-600 text-zinc-400 font-mono">
         Auto-expires in 60 minutes
       </footer>
     </main>
