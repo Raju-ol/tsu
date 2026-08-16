@@ -8,6 +8,10 @@
     "start": "cross-env NODE_ENV=production tsx server.ts"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "cross-env": "^7.0.3",
     "emoji-picker-react": "^4.19.1",
     "lucide-react": "^1.31.0",
@@ -16,15 +20,10 @@
     "react-dom": "19.2.8",
     "react-swipeable": "^7.0.2",
     "socket.io": "^4.8.3",
-    "socket.io-client": "^4.8.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "socket.io-client": "^4.8.3",
     "tailwindcss": "^4",
     "tsx": "^4.23.12",
     "typescript": "^5"
-  }
+  },
+  "devDependencies": {}
 }
