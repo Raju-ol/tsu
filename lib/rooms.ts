@@ -7,16 +7,13 @@ export interface Room {
   expiresAt: number;
 }
 
-// Persist the in-memory rooms store across HMR reloads in Next.js development mode
+// Persist the in-memory rooms store globally across all environments (dev & prod)
 const globalForRooms = globalThis as unknown as {
   roomsMap: Map<string, Room> | undefined;
 };
 
 export const roomsMap = globalForRooms.roomsMap ?? new Map<string, Room>();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForRooms.roomsMap = roomsMap;
-}
+globalForRooms.roomsMap = roomsMap;
 
 // Generate a random 6-character uppercase alphanumeric code
 function generateCode(): string {
@@ -59,16 +56,18 @@ export function createRoom(roomName?: string): Room {
  * Get room data by code (case-insensitive & validated format).
  */
 export function getRoom(code: string): Room | undefined {
-  if (!code || !isValidRoomCodeFormat(code)) return undefined;
-  return roomsMap.get(code.trim().toUpperCase());
+  const cleanCode = code ? code.trim().toUpperCase() : "";
+  if (!cleanCode || !isValidRoomCodeFormat(cleanCode)) return undefined;
+  return roomsMap.get(cleanCode);
 }
 
 /**
  * Checks if a room exists and has not expired.
  */
 export function isRoomValid(code: string): boolean {
-  if (!isValidRoomCodeFormat(code)) return false;
-  const room = getRoom(code);
+  const cleanCode = code ? code.trim().toUpperCase() : "";
+  if (!isValidRoomCodeFormat(cleanCode)) return false;
+  const room = getRoom(cleanCode);
   if (!room) return false;
   return Date.now() < room.expiresAt;
 }
